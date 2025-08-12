@@ -1,0 +1,16 @@
+/target
+write
+sched
+checkin
+.env
+*_insight
+affirmations/
+prompt
+*_prompt
+dash
+insight_affirmations
+llm/
+weekly/
+data/
+veryonlineguy.com/public/
+veryonlineguy.com/content/*
