@@ -3,6 +3,10 @@
 2. Sub 7 2k
 
 # Changelog
+## Aug 13
+- Lowered back volume
+- Bumped abs volume
+
 ## Aug 12
 - Deloaded veggies
 - Added deload lift week @ 4 week meso

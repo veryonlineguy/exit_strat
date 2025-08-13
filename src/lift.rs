@@ -142,13 +142,13 @@ pub fn get_lifts() -> String {
                 name: "Pulldown (Normal Grip)".to_string(),
                 target: "Back",
                 weight: 40,
-                sets: vec![8, 8],
+                sets: vec![7],
             },
             Lift {
                 name: "Seated Cable Row".to_string(),
                 target: "Back",
                 weight: 30,
-                sets: vec![7, 6],
+                sets: vec![6],
             },
             Lift {
                 name: "Machine Chest Press".to_string(),
@@ -178,7 +178,7 @@ pub fn get_lifts() -> String {
                 name: "Slant board situp (weighted)".to_string(),
                 target: "Abs",
                 weight: 5,
-                sets: vec![2, 2],
+                sets: vec![2, 2, 2],
             },
         ]
         .into(),
@@ -289,6 +289,12 @@ pub fn get_lifts() -> String {
         sunday: None,
     };
 
+    let deload = Workout {
+        cardio: Some("4k @ 18spm Df 1".to_string()),
+        strength: None,
+        warmup: None,
+    };
+
     let local: DateTime<Local> = Local::now();
     let tomorrow: NaiveDate =
         NaiveDate::from_ymd_opt(local.year(), local.month(), local.day()).unwrap();
@@ -307,6 +313,15 @@ pub fn get_lifts() -> String {
             Weekday::Sun => format_workout(week.sunday),
         }
     } else {
-        "# Heben\nDELOAD WEEK\n".to_string()
+
+        match day {
+            Weekday::Mon => format_workout(Some(deload)),
+            Weekday::Tue => format_workout(None),
+            Weekday::Wed => format_workout(Some(deload)),
+            Weekday::Thu => format_workout(None),
+            Weekday::Fri => format_workout(Some(deload)),
+            Weekday::Sat => format_workout(None),
+            Weekday::Sun => format_workout(None),
+        }
     }
 }
