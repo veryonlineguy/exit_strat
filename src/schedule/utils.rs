@@ -181,7 +181,7 @@ pub fn morning_str() -> Vec<String> {
     result.push("Weigh");
     result.push("Write weight in field notes");
     result.push("Cook");
-    result.push("30 min reading");
+    result.push("5 min reading");
     result.push("Daily intention Post It");
     result.push("Write suggestions down");
     result.push("Check Obsidian cal");
@@ -199,18 +199,12 @@ pub fn morning_str() -> Vec<String> {
     result.push("Anki");
     result.push("Work Anki");
     result.push("Big Game Anki");
-    result.push("Wash face");
-    result.push("Moisturize body");
 
     match day {
         Weekday::Mon | Weekday::Wed | Weekday::Fri => result.push("Shave face"),
         _ => (),
     }
 
-    match day {
-        Weekday::Mon | Weekday::Fri => result.push("Shave Legs"),
-        _ => (),
-    }
     let shot_str = get_shot_leg();
 
     match day {
@@ -219,7 +213,10 @@ pub fn morning_str() -> Vec<String> {
         }
         _ => (),
     }
-    result.push("Vid");
+    match day {
+        Weekday::Mon | Weekday::Wed | Weekday::Fri => result.push("Keal vid"),
+        _ => (),
+    }
     result.into_iter().map(|s| s.to_string()).collect()
 }
 
@@ -227,17 +224,12 @@ pub fn evening_str() -> Vec<String> {
     let mut result = Vec::new();
 
     result.push("Take meds".to_string());
-    result.push("Pre-bed protein".to_string());
-    result.push("Wash Face".to_string());
     result.push("Floss".to_string());
     result.push("Brush".to_string());
     result.push("Retainer".to_string());
-    result.push("Put on everlane bra".to_string());
-    result.push("Put away phone in kitchen".to_string());
     result.push("Log weight".to_string());
     result.push("Read through tomorrow".to_string());
     result.push("Reflection".to_string());
-    result.push("Journal 40 mins".to_string());
 
     result
 }
@@ -349,7 +341,6 @@ fn get_shot_leg() -> String {
     };
     shot
 }
-
 
 pub fn _movie() -> Vec<String> {
     let hulu_movies = vec![
@@ -468,8 +459,6 @@ pub fn _movie() -> Vec<String> {
 
     vec![movies.choose(&mut rand::rng()).unwrap().to_string()]
 }
-
-
 
 pub fn makeup() {
     let lip_options = ["Kush Lip Oil", "Summer Fridays", "Peach Glaze"];

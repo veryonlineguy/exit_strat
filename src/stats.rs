@@ -1,4 +1,5 @@
 use crate::util;
+use polyfit_rs::polyfit_rs::polyfit;
 use rusqlite::{Connection, Result};
 use std::collections::HashMap;
 
@@ -132,8 +133,40 @@ pub fn spend_summary() -> Result<()> {
     Ok(())
 }
 
+fn fit_rowing() -> Result<()> {
+    let db_path = util::get_database_path()?;
+    let conn = Connection::open(&db_path)?;
+
+    let mut stmt =
+        conn.prepare("select distance, time from row  order by date_time asc limit 30;")?;
+
+    let spend_iter =
+        stmt.query_map([], |row| Ok((row.get::<_, f64>(0)?, row.get::<_, f64>(1)?)))?;
+
+    let mut distances = vec![];
+    let mut times = vec![];
+    for spend in spend_iter {
+        let (distance, time) = spend?;
+        distances.push(distance);
+        times.push(time);
+        println!("{distance}: {time}  ");
+    }
+
+    let [a, b, c] = polyfit(&distances, &times, 2).unwrap().try_into().unwrap();
+
+    let x: f64 = 2000.0;
+
+    let twoktime = a + b * x + c * x.powf(2.0);
+    let minutes = twoktime as u64 / 60;
+    let second = twoktime as u64 % 60;
+
+    println!("2k time pred {minutes}:{second}");
+    Ok(())
+}
+
 pub fn report() -> Result<()> {
     spend_summary()?;
+    fit_rowing()?;
 
     Ok(())
 }

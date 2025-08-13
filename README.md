@@ -3,6 +3,9 @@
 2. Sub 7 2k
 
 # Changelog
+## Aug 14
+- Mssively reduced load
+
 ## Aug 13
 - Lowered back volume
 - Bumped abs volume

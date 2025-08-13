@@ -53,7 +53,6 @@ struct Args {
     #[arg(long)]
     friday: bool,
 
- 
     /// Print Saturday's schedule to stdout
     #[arg(long)]
     saturday: bool,
@@ -331,8 +330,6 @@ fn main() {
     if args.week_no {
         println!("{}", crate::schedule::utils::current_week_number());
     }
-
-  
 
     if args.lift {
         println!("{}", lift::get_lifts());

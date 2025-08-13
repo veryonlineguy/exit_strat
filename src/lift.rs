@@ -313,7 +313,6 @@ pub fn get_lifts() -> String {
             Weekday::Sun => format_workout(week.sunday),
         }
     } else {
-
         match day {
             Weekday::Mon => format_workout(Some(deload)),
             Weekday::Tue => format_workout(None),
