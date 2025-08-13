@@ -4,6 +4,8 @@
 
 # Changelog
 ## Aug 14
+- Shortened warm up
+- reduced berries
 - Mssively reduced load
 
 ## Aug 13

@@ -10,7 +10,7 @@ pub fn get_menu() -> String {
     for ing in &ingredients {
         menu.push_str(&("- [ ] ".to_owned() + ing + "\n"));
     }
-    menu.push_str("\n\n### Add Ons\n- [ ] Creatine\n- [ ] Collagen\n- [ ] can of chicken\n- [ ] can of chicken\n- [ ] bag berries\n\n## Instructions\n");
+    menu.push_str("\n\n### Add Ons\n- [ ] Creatine\n- [ ] Collagen\n- [ ] can of chicken\n- [ ] can of chicken\n\n## Instructions\n");
     let water = "Water: 8 cups\n";
     let ip = "IP: 20 min\n\n";
 

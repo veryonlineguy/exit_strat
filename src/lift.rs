@@ -65,7 +65,7 @@ pub fn get_lifts() -> String {
     let week_no = crate::schedule::utils::current_week_number();
     let monday = if week_no % 5 == 5 {
         Workout {
-            warmup: Some("10 min erg @ 18spm w df 1".to_string()),
+            warmup: Some("5 min erg @ 18spm w df 1".to_string()),
             cardio: Some("- [ ] 2000k @28spm".to_string()),
             strength: None,
         }
