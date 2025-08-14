@@ -4,6 +4,8 @@
 
 # Changelog
 ## Aug 14
+- Lowered back volume
+- Made model results easier to interpret
 - Shortened warm up
 - reduced berries
 - Mssively reduced load

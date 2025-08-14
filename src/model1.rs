@@ -51,7 +51,7 @@ struct Target {
 
 const PCT_LOSS_LOW: f64 = 0.005; // 0.5 % / wk
 const PCT_LOSS_HIGH: f64 = 0.010; // 1.0 % / wk
-const CAL_ADJUST_STEP: u32 = 100;
+const CAL_ADJUST_STEP: u32 = 200;
 const LB_PER_KG: f64 = 2.205;
 
 // convert incoming weight to kg if the CSV is in pounds
@@ -242,6 +242,8 @@ pub fn run<P: AsRef<std::path::Path>>(csv_path: P) -> Result<()> {
     let mut kf = Kalman3D::new(127.0);
 
     let mut kalman_weights: Vec<f64> = Vec::new();
+    let mut cals :Vec<f64> = Vec::new();
+
     for result in rdr.deserialize() {
         let row: Row = result?;
         kf.step(&row);
@@ -251,6 +253,7 @@ pub fn run<P: AsRef<std::path::Path>>(csv_path: P) -> Result<()> {
             kf.tdee(),
             kf.kcal_per_re()
         );
+        cals.push(row.intake_kcal);
         kalman_weights.push(kf.weight_kg() * LB_PER_KG);
     }
 
@@ -271,37 +274,34 @@ pub fn run<P: AsRef<std::path::Path>>(csv_path: P) -> Result<()> {
     // 14‑day %‑loss per week & guidance
     // guidance
 
-    println!("target {} kcal", target.target);
-    if pct_loss_per_week < PCT_LOSS_LOW {
-        target.target -= CAL_ADJUST_STEP;
-        format!("Suggest −{} kcal/day or +1 k steps", CAL_ADJUST_STEP as i32)
+    let sum: f64 = cals.into_iter().rev().take(7).sum();
+    let avg = sum /7.0;
+
+
+    println!("Guidelines: -{} < {:.3 } < -{} ", PCT_LOSS_LOW, -pct_loss_per_week ,  PCT_LOSS_HIGH);
+
+
+    let suggestion = if pct_loss_per_week < PCT_LOSS_LOW {
+        let target =  avg - CAL_ADJUST_STEP as f64;
+        format!("Suggest −{} kcal/day T: {:.0}", CAL_ADJUST_STEP as i32,target)
     } else if pct_loss_per_week > PCT_LOSS_HIGH {
-        target.target += CAL_ADJUST_STEP;
+        let target = avg + CAL_ADJUST_STEP as f64;
         format!(
-            "Suggest +{} kcal/day (loss > 1 %/wk)",
-            CAL_ADJUST_STEP as i32
+            "Suggest +{} kcal/day T: {:.0}",
+            CAL_ADJUST_STEP as i32,
+            target
         )
     } else {
         "Keep calories steady".to_string()
     };
 
+    println!("{}", suggestion);
+
     let today = NaiveDate::from_ymd_opt(today.year(), today.month(), today.day()).unwrap();
 
     let update = NaiveDate::from_ymd_opt(target.year, target.month, target.day).unwrap();
 
-    let diff = today - update;
-    let diff = diff.num_days();
-    println!("Target is {} days old", diff);
-
-    if diff > 6 {
-        target.year = today.year();
-        target.month = today.month();
-        target.day = today.day();
-        let json = serde_json::to_string_pretty(&target).unwrap();
-        let mut file = File::create("data/target.json").unwrap();
-        file.write_all(json.as_bytes()).unwrap();
-        println!("WROTE NEW TARGET of {}", target.target);
-    }
+   
 
     Ok(())
 }

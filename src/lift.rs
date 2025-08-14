@@ -38,6 +38,9 @@ fn format_workout<'a>(workout: Option<Workout<'a>>) -> String {
             let workout_str = "- [ ] ".to_owned() + &workout.warmup.unwrap() + "\n";
             result.push_str(&workout_str);
         }
+        
+        result.push_str("## LIFT\n");
+
         for lift in workout.strength.unwrap() {
             for set in lift.sets {
                 let set_str = "- [ ] ".to_owned()
@@ -224,7 +227,7 @@ pub fn get_lifts() -> String {
     };
 
     let friday = Workout {
-        warmup: Some("10 min erg @ 18spm".to_string()),
+        warmup: Some("5 min Elliptical".to_string()),
         strength: vec![
             Lift {
                 name: "Slant board situp (weighted)".to_string(),
@@ -236,13 +239,13 @@ pub fn get_lifts() -> String {
                 name: "Pulldown (Normal Grip)".to_string(),
                 target: "Back",
                 weight: 40,
-                sets: vec![8, 8],
+                sets: vec![8,],
             },
             Lift {
                 name: "Seated Cable Row".to_string(),
                 target: "Back",
                 weight: 30,
-                sets: vec![7, 6],
+                sets: vec![7],
             },
             Lift {
                 name: "Machine Chest Press".to_string(),
