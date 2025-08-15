@@ -246,7 +246,6 @@ fn main() {
         schedule::write_tomorrow_to_vault();
         model1::run("data/weight_energy.csv").unwrap();
 
-        stats::report().unwrap();
     }
 
     if args.publish {

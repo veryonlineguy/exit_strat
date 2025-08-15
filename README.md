@@ -3,6 +3,9 @@
 2. Sub 7 2k
 
 # Changelog
+## Aug 15
+- Increased ergo volume
+
 ## Aug 14
 - Lowered back volume
 - Made model results easier to interpret

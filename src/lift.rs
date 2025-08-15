@@ -34,13 +34,13 @@ fn format_workout<'a>(workout: Option<Workout<'a>>) -> String {
     let mut result = String::new();
     if workout.strength.is_some() {
         result.push_str("# Heben\n");
+
+        
+        result.push_str("## LIFT\n");
         if workout.warmup.is_some() {
             let workout_str = "- [ ] ".to_owned() + &workout.warmup.unwrap() + "\n";
             result.push_str(&workout_str);
         }
-        
-        result.push_str("## LIFT\n");
-
         for lift in workout.strength.unwrap() {
             for set in lift.sets {
                 let set_str = "- [ ] ".to_owned()
@@ -68,20 +68,14 @@ pub fn get_lifts() -> String {
     let week_no = crate::schedule::utils::current_week_number();
     let monday = if week_no % 5 == 5 {
         Workout {
-            warmup: Some("5 min erg @ 18spm w df 1".to_string()),
+            warmup: Some("- [ ] 5 min erg @ 22spm w df 1".to_string()),
             cardio: Some("- [ ] 2000k @28spm".to_string()),
             strength: None,
         }
     } else {
         Workout {
-            warmup: Some("10 min erg @ 18spm".to_string()),
+            warmup: Some("5 min Elliptical".to_string()),
             strength: vec![
-                Lift {
-                    name: "Stair Calves".to_string(),
-                    target: "Calves",
-                    weight: 0,
-                    sets: vec![6, 6, 6],
-                },
                 Lift {
                     name: "Leg Extensions".to_string(),
                     target: "Quads",
@@ -139,7 +133,7 @@ pub fn get_lifts() -> String {
     };
 
     let wednesday = Workout {
-        warmup: Some("10 min erg @ 18spm".to_string()),
+        warmup: Some("5 min Elliptical".to_string()),
         strength: vec![
             Lift {
                 name: "Pulldown (Normal Grip)".to_string(),
@@ -189,14 +183,8 @@ pub fn get_lifts() -> String {
     };
 
     let thursday = Workout {
-        warmup: Some("10 min erg @ 18spm".to_string()),
+        warmup: Some("5 min Elliptical".to_string()),
         strength: vec![
-            Lift {
-                name: "Stair Calves".to_string(),
-                target: "Calves",
-                weight: 0,
-                sets: vec![6, 6, 6],
-            },
             Lift {
                 name: "Barbell Hip Thrusts".to_string(),
                 target: "Glutes",
@@ -279,7 +267,7 @@ pub fn get_lifts() -> String {
     let saturday = Workout {
         warmup: None,
         strength: None,
-        cardio: Some("- [ ] 4000m @ 18spm".to_string()),
+        cardio: Some("- [ ] 5 min df 1\n- [ ] 4000m @ 22spm".to_string()),
     };
 
     let week = Week {
