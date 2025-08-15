@@ -1,6 +1,7 @@
 use chrono::{DateTime, Datelike, Days, Local, NaiveDate, Weekday};
 
 #[allow(dead_code)]
+#[derive(Clone)]
 struct Lift<'a> {
     name: String,
     target: &'a str,
@@ -9,6 +10,7 @@ struct Lift<'a> {
 }
 
 #[allow(dead_code)]
+#[derive(Clone)]
 struct Workout<'a> {
     warmup: Option<String>,
     strength: Option<Vec<Lift<'a>>>,
@@ -25,24 +27,23 @@ struct Week<'a> {
     sunday: Option<Workout<'a>>,
 }
 
-fn format_workout<'a>(workout: Option<Workout<'a>>) -> String {
-    if workout.is_none() {
-        return "".to_string();
-    }
+fn format_workout<'a>(workout:  Workout<'a>) -> String {
+    
 
-    let workout = workout.unwrap();
     let mut result = String::new();
-    if workout.strength.is_some() {
+ {
         result.push_str("# Heben\n");
 
         
-        result.push_str("## LIFT\n");
+     
         if workout.warmup.is_some() {
-            let workout_str = "- [ ] ".to_owned() + &workout.warmup.unwrap() + "\n";
+            result.push_str("## LIFT\n");
+            let workout_str = "- [ ] ".to_owned() + &workout.warmup.clone().unwrap() + "\n";
             result.push_str(&workout_str);
         }
-        for lift in workout.strength.unwrap() {
-            for set in lift.sets {
+        if workout.strength.is_some() {
+        for lift in workout.strength.as_ref().unwrap() {
+            for set in lift.sets.clone() {
                 let set_str = "- [ ] ".to_owned()
                     + &lift.name.clone()
                     + " "
@@ -55,10 +56,11 @@ fn format_workout<'a>(workout: Option<Workout<'a>>) -> String {
         }
         result.push_str("\n");
     }
+    }
 
     if workout.cardio.is_some() {
         result.push_str("# Cardio\n");
-        result.push_str(&workout.cardio.unwrap());
+        result.push_str(&workout.cardio.clone().unwrap());
     }
 
     result
@@ -66,7 +68,7 @@ fn format_workout<'a>(workout: Option<Workout<'a>>) -> String {
 
 pub fn get_lifts() -> String {
     let week_no = crate::schedule::utils::current_week_number();
-    let monday = if week_no % 5 == 5 {
+    let _monday = if week_no % 5 == 5 {
         Workout {
             warmup: Some("- [ ] 5 min erg @ 22spm w df 1".to_string()),
             cardio: Some("- [ ] 2000k @28spm".to_string()),
@@ -112,7 +114,7 @@ pub fn get_lifts() -> String {
         }
     };
 
-    let tuesday = Workout {
+    let _tuesday = Workout {
         warmup: Some("15 min erg @ 18spm".to_string()),
         strength: vec![
             Lift {
@@ -132,7 +134,7 @@ pub fn get_lifts() -> String {
         cardio: None,
     };
 
-    let wednesday = Workout {
+    let _wednesday = Workout {
         warmup: Some("5 min Elliptical".to_string()),
         strength: vec![
             Lift {
@@ -182,7 +184,7 @@ pub fn get_lifts() -> String {
         cardio: None,
     };
 
-    let thursday = Workout {
+    let _thursday = Workout {
         warmup: Some("5 min Elliptical".to_string()),
         strength: vec![
             Lift {
@@ -214,7 +216,7 @@ pub fn get_lifts() -> String {
         cardio: None,
     };
 
-    let friday = Workout {
+    let _friday = Workout {
         warmup: Some("5 min Elliptical".to_string()),
         strength: vec![
             Lift {
@@ -267,18 +269,18 @@ pub fn get_lifts() -> String {
     let saturday = Workout {
         warmup: None,
         strength: None,
-        cardio: Some("- [ ] 5 min df 1\n- [ ] 4000m @ 22spm".to_string()),
+        cardio: Some("- [ ] 5 min df 1\n- [ ] 5000m @ 22spm".to_string()),
+    };
+    
+    let grindset = Workout {
+        warmup: None,
+        strength: None,
+        cardio: Some("- [ ] 5 min df 1\n- [ ] 20m @ 22spm".to_string()),
     };
 
-    let week = Week {
-        monday: Some(monday),
-        tuesday: Some(tuesday),
-        wednesday: Some(wednesday),
-        thursday: Some(thursday),
-        friday: Some(friday),
-        saturday: Some(saturday),
-        sunday: None,
-    };
+
+    let none = Workout{warmup: None, strength: None, cardio: None};
+ 
 
     let deload = Workout {
         cardio: Some("4k @ 18spm Df 1".to_string()),
@@ -293,25 +295,36 @@ pub fn get_lifts() -> String {
     let day = tomorrow.weekday();
 
     let week_no = crate::schedule::utils::current_week_number();
+
+    let monday = if week_no % 5 == 0 {
+           Workout {
+            warmup: Some("- [ ] 5 min erg @ 22spm w df 1".to_string()),
+            cardio: Some("- [ ] 2000k @28spm".to_string()),
+            strength: None,
+        }
+    } else {
+        grindset.clone()
+    };
+    
     if week_no % 5 != 4 {
         match day {
-            Weekday::Mon => format_workout(week.monday),
-            Weekday::Tue => format_workout(week.tuesday),
-            Weekday::Wed => format_workout(week.wednesday),
-            Weekday::Thu => format_workout(week.thursday),
-            Weekday::Fri => format_workout(week.friday),
-            Weekday::Sat => format_workout(week.saturday),
-            Weekday::Sun => format_workout(week.sunday),
+            Weekday::Mon => format_workout(monday),
+            Weekday::Tue => format_workout(grindset.clone()),
+            Weekday::Wed => format_workout(grindset.clone()),
+            Weekday::Thu => format_workout(grindset.clone()),
+            Weekday::Fri => format_workout(grindset.clone()),
+            Weekday::Sat => format_workout(saturday),
+            Weekday::Sun => format_workout(none),
         }
     } else {
         match day {
-            Weekday::Mon => format_workout(Some(deload)),
-            Weekday::Tue => format_workout(None),
-            Weekday::Wed => format_workout(Some(deload)),
-            Weekday::Thu => format_workout(None),
-            Weekday::Fri => format_workout(Some(deload)),
-            Weekday::Sat => format_workout(None),
-            Weekday::Sun => format_workout(None),
+            Weekday::Mon => format_workout(deload),
+            Weekday::Tue => format_workout(none),
+            Weekday::Wed => format_workout(deload),
+            Weekday::Thu => format_workout(none),
+            Weekday::Fri => format_workout(deload),
+            Weekday::Sat => format_workout(none),
+            Weekday::Sun => format_workout(none),
         }
     }
 }

@@ -4,7 +4,8 @@
 
 # Changelog
 ## Aug 15
-- Increased ergo volume
+- Replaced lifting with rowing
+- Increased ergo stroke rate
 
 ## Aug 14
 - Lowered back volume
