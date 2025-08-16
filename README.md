@@ -1,8 +1,14 @@
 # Goals
 1. Get out of debt
-2. Sub 7 2k
+2. Sub 8m 2k
+
+Vo2 estimate assumes weight > 75kg
 
 # Changelog
+## Aug 16
+- Removed second sat cook
+- Added split to 2k pred
+
 ## Aug 15
 - Replaced lifting with rowing
 - Increased ergo stroke rate

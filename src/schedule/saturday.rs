@@ -4,7 +4,6 @@ pub fn saturday_schedule_str() -> Vec<String> {
     let mut content: Vec<String> = Vec::new();
     let morning_str = utils::morning_str();
     content.extend(morning_str);
-    content.push("Cook".to_string());
     content.push("Audio book 40 min".to_string());
     content.push("Clean up counter".to_string());
     content.push("Brush teeth".to_string());
