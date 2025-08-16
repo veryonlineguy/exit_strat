@@ -27,35 +27,31 @@ struct Week<'a> {
     sunday: Option<Workout<'a>>,
 }
 
-fn format_workout<'a>(workout:  Workout<'a>) -> String {
-    
-
+fn format_workout<'a>(workout: Workout<'a>) -> String {
     let mut result = String::new();
- {
+    {
         result.push_str("# Heben\n");
 
-        
-     
         if workout.warmup.is_some() {
             result.push_str("## LIFT\n");
             let workout_str = "- [ ] ".to_owned() + &workout.warmup.clone().unwrap() + "\n";
             result.push_str(&workout_str);
         }
         if workout.strength.is_some() {
-        for lift in workout.strength.as_ref().unwrap() {
-            for set in lift.sets.clone() {
-                let set_str = "- [ ] ".to_owned()
-                    + &lift.name.clone()
-                    + " "
-                    + &set.to_string()
-                    + " sets @ "
-                    + &lift.weight.to_string()
-                    + "lbs\n";
-                result.push_str(&set_str);
+            for lift in workout.strength.as_ref().unwrap() {
+                for set in lift.sets.clone() {
+                    let set_str = "- [ ] ".to_owned()
+                        + &lift.name.clone()
+                        + " "
+                        + &set.to_string()
+                        + " sets @ "
+                        + &lift.weight.to_string()
+                        + "lbs\n";
+                    result.push_str(&set_str);
+                }
             }
+            result.push_str("\n");
         }
-        result.push_str("\n");
-    }
     }
 
     if workout.cardio.is_some() {
@@ -229,7 +225,7 @@ pub fn get_lifts() -> String {
                 name: "Pulldown (Normal Grip)".to_string(),
                 target: "Back",
                 weight: 40,
-                sets: vec![8,],
+                sets: vec![8],
             },
             Lift {
                 name: "Seated Cable Row".to_string(),
@@ -271,16 +267,18 @@ pub fn get_lifts() -> String {
         strength: None,
         cardio: Some("- [ ] 5 min df 1\n- [ ] 5000m @ 22spm".to_string()),
     };
-    
+
     let grindset = Workout {
         warmup: None,
         strength: None,
         cardio: Some("- [ ] 5 min df 1\n- [ ] 20m @ 22spm".to_string()),
     };
 
-
-    let none = Workout{warmup: None, strength: None, cardio: None};
- 
+    let none = Workout {
+        warmup: None,
+        strength: None,
+        cardio: None,
+    };
 
     let deload = Workout {
         cardio: Some("20m @ 18spm Df 1".to_string()),
@@ -297,7 +295,7 @@ pub fn get_lifts() -> String {
     let week_no = crate::schedule::utils::current_week_number();
 
     let monday = if week_no % 5 == 0 {
-           Workout {
+        Workout {
             warmup: Some("- [ ] 5 min erg @ 22spm w df 1".to_string()),
             cardio: Some("- [ ] 2000k @28spm".to_string()),
             strength: None,
@@ -305,7 +303,7 @@ pub fn get_lifts() -> String {
     } else {
         grindset.clone()
     };
-    
+
     if week_no % 5 != 4 {
         match day {
             Weekday::Mon => format_workout(monday),

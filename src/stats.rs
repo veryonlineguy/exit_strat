@@ -155,16 +155,14 @@ fn fit_rowing() -> Result<()> {
 
     let x: f64 = 2000.0;
 
-    fn  conv_time(seconds: u64) -> String {
-            let minutes = seconds  / 60;
-            let second =  seconds % 60;
+    fn conv_time(seconds: u64) -> String {
+        let minutes = seconds / 60;
+        let second = seconds % 60;
 
-            format!("{}:{}",minutes, second).to_string()
-
-
+        format!("{}:{}", minutes, second).to_string()
     }
-    
-    let twoktime = a + b * x + c * x.powf(2.0) ;
+
+    let twoktime = a + b * x + c * x.powf(2.0);
 
     let split = twoktime / 4.0;
 
@@ -173,7 +171,6 @@ fn fit_rowing() -> Result<()> {
 
     let sec = (twoktime as u64) % 60;
     let sec = (sec as f64) / 60.0;
-  
 
     let min = (twoktime as u64 / 60);
 
@@ -181,9 +178,13 @@ fn fit_rowing() -> Result<()> {
 
     let y = 15.7 - (1.5 * mins);
 
-    let vo2 = (y * 1000.0) /  weight_kg; 
+    let vo2 = (y * 1000.0) / weight_kg;
 
-    println!("2k time pred {} split {}  ", conv_time(twoktime as u64), conv_time(split as u64));
+    println!(
+        "2k time pred {} split {}  ",
+        conv_time(twoktime as u64),
+        conv_time(split as u64)
+    );
     println!("Vo2 Estimate {:.1}  ", vo2);
     Ok(())
 }
@@ -194,4 +195,3 @@ pub fn report() -> Result<()> {
 
     Ok(())
 }
-

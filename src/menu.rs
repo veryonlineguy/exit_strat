@@ -2,8 +2,8 @@ pub fn get_menu() -> String {
     let ingredients = vec![
         "1 cup Botan Rice",
         "15g ghee",
-        "1 tsp better than buillon",
-        "1 can of tomato sauce",
+        "2 tsp better than buillon",
+        "25g corn",
     ];
 
     let mut menu = String::from("## Instant Pot\n");
@@ -11,8 +11,8 @@ pub fn get_menu() -> String {
         menu.push_str(&("- [ ] ".to_owned() + ing + "\n"));
     }
     menu.push_str("\n\n### Add Ons\n- [ ] Creatine\n- [ ] Collagen\n- [ ] can of chicken\n- [ ] can of chicken\n\n## Instructions\n");
-    let water = "Water: 8 cups\n";
-    let ip = "IP: 20 min\n\n";
+    let water = "Water: 2 cups\n";
+    let ip = "IP: Rice settingn\n";
 
     menu.push_str(&water);
     menu.push_str(&ip);

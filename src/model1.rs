@@ -242,7 +242,7 @@ pub fn run<P: AsRef<std::path::Path>>(csv_path: P) -> Result<()> {
     let mut kf = Kalman3D::new(127.0);
 
     let mut kalman_weights: Vec<f64> = Vec::new();
-    let mut cals :Vec<f64> = Vec::new();
+    let mut cals: Vec<f64> = Vec::new();
 
     for result in rdr.deserialize() {
         let row: Row = result?;
@@ -275,21 +275,24 @@ pub fn run<P: AsRef<std::path::Path>>(csv_path: P) -> Result<()> {
     // guidance
 
     let sum: f64 = cals.into_iter().rev().take(7).sum();
-    let avg = sum /7.0;
+    let avg = sum / 7.0;
 
-
-    println!("Guidelines: -{} < {:.3 } < -{} ", PCT_LOSS_LOW, -pct_loss_per_week ,  PCT_LOSS_HIGH);
-
+    println!(
+        "Guidelines: -{} < {:.3 } < -{} ",
+        PCT_LOSS_LOW, -pct_loss_per_week, PCT_LOSS_HIGH
+    );
 
     let suggestion = if pct_loss_per_week < PCT_LOSS_LOW {
-        let target =  avg - CAL_ADJUST_STEP as f64;
-        format!("Suggest −{} kcal/day T: {:.0}", CAL_ADJUST_STEP as i32,target)
+        let target = avg - CAL_ADJUST_STEP as f64;
+        format!(
+            "Suggest −{} kcal/day T: {:.0}",
+            CAL_ADJUST_STEP as i32, target
+        )
     } else if pct_loss_per_week > PCT_LOSS_HIGH {
         let target = avg + CAL_ADJUST_STEP as f64;
         format!(
             "Suggest +{} kcal/day T: {:.0}",
-            CAL_ADJUST_STEP as i32,
-            target
+            CAL_ADJUST_STEP as i32, target
         )
     } else {
         "Keep calories steady".to_string()
@@ -300,8 +303,6 @@ pub fn run<P: AsRef<std::path::Path>>(csv_path: P) -> Result<()> {
     let today = NaiveDate::from_ymd_opt(today.year(), today.month(), today.day()).unwrap();
 
     let update = NaiveDate::from_ymd_opt(target.year, target.month, target.day).unwrap();
-
-   
 
     Ok(())
 }
