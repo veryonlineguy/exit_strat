@@ -6,6 +6,7 @@ Vo2 estimate assumes weight > 75kg
 
 # Changelog
 ## Aug 16
+- Dropped some workout load
 - Removed second sat cook
 - Added split to 2k pred
 

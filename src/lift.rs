@@ -283,7 +283,7 @@ pub fn get_lifts() -> String {
  
 
     let deload = Workout {
-        cardio: Some("4k @ 18spm Df 1".to_string()),
+        cardio: Some("20m @ 18spm Df 1".to_string()),
         strength: None,
         warmup: None,
     };
@@ -310,7 +310,7 @@ pub fn get_lifts() -> String {
         match day {
             Weekday::Mon => format_workout(monday),
             Weekday::Tue => format_workout(grindset.clone()),
-            Weekday::Wed => format_workout(grindset.clone()),
+            Weekday::Wed => format_workout(none),
             Weekday::Thu => format_workout(grindset.clone()),
             Weekday::Fri => format_workout(grindset.clone()),
             Weekday::Sat => format_workout(saturday),
