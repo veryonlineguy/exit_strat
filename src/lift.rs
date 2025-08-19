@@ -311,7 +311,7 @@ pub fn get_lifts() -> String {
             Weekday::Wed => format_workout(none),
             Weekday::Thu => format_workout(grindset.clone()),
             Weekday::Fri => format_workout(grindset.clone()),
-            Weekday::Sat => format_workout(saturday),
+            Weekday::Sat => format_workout(none),
             Weekday::Sun => format_workout(none),
         }
     } else {

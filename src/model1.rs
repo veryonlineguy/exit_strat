@@ -141,7 +141,7 @@ impl Kalman2D {
     pub fn new(initial_w_kg: f64) -> Self {
         // Tune these:
         let q_weight_var: f64 = 0.0_f64.powi(2); // weight has no intrinsic drift in the process model
-        let q_tdee_var: f64 = 80.0_f64.powi(2); // allow TDEE to drift day-to-day (e.g., ~±12 kcal)
+        let q_tdee_var: f64 = 2.0_f64.powi(2); // allow TDEE to drift day-to-day (e.g., ~±12 kcal)
 
         // Initial uncertainty (also tune):
         let p0 = Matrix2::from_diagonal(&Vector2::new(0.5_f64.powi(2), 600.0_f64.powi(2)));
@@ -156,7 +156,7 @@ impl Kalman2D {
 
     /// One-day predict / update
     pub fn step(&mut self, row: &Row) {
-        let r_scale_var: f64 = 0.5_f64.powi(2); // variance of scale noise (kg^2) — tune to your scale/variance
+        let r_scale_var: f64 = 0.3_f64.powi(2); // variance of scale noise (kg^2) — tune to your scale/variance
         let c = KCAL_PER_KG; // e.g., 7700.0
 
         // ---------- PREDICT ----------
