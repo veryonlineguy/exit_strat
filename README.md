@@ -6,6 +6,7 @@ Vo2 estimate assumes weight > 75kg
 
 # Changelog
 ## Aug 19
+- Added morning Dishes
 - Switched to one state Kalman Filter
 ## Aug 16
 - Dropped some workout load

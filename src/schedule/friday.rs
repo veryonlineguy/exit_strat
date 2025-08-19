@@ -11,6 +11,7 @@ pub fn friday_schedule_str() -> Vec<String> {
     content.push("Sweep hallway + bathroom".to_string());
     content.push("Swifter".to_string());
     content.push("Take out trash".to_string());
+    content.push("Weekly Reflection".to_string());
     content.extend(utils::evening_str());
     content
 }
