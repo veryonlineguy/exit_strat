@@ -8,9 +8,13 @@ pub fn tuesday_schedule_str() -> Vec<String> {
     content.push("Cook".to_string());
     content.extend(utils::tea());
     content.push("Audio book 40 min".to_string());
-    content.push("Match socks".to_string());
     content.push("Clean up counter".to_string());
+    content.push("Match socks".to_string());
+
     content.push("Load Laundry".to_string());
+    content.push("Sweep bed + office + closet".to_string());
+    content.push("Swifter".to_string());
+    content.extend(utils::clean_washer_str());
     content.push("Clean Closet".to_string());
 
     content.push("10 min dbt".to_string());
@@ -19,9 +23,7 @@ pub fn tuesday_schedule_str() -> Vec<String> {
     content.push("Wash HRM".to_string());
     content.extend(utils::gratitude());
     content.push("Brush teeth".to_string());
-    content.push("Sweep bed + office + closet".to_string());
-    content.push("Swifter".to_string());
-    content.extend(utils::clean_washer_str());
+
     content.push("Put away laundry".to_string());
     content.extend(utils::tea());
     content.push("Do Dishes".to_string());
