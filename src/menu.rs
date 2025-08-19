@@ -6,7 +6,7 @@ pub fn get_menu() -> String {
         "25g corn",
     ];
 
-    let mut menu = String::from("## Instant Pot\n");
+    let mut menu = String::from("## Caffeine\n- [ ] 2 tsp instant coffee\n- [ ] 2tsp half calf\n- [ ] green tea\n- [ ] green tea\n- [ ] green tea\n## Instant Pot\n");
     for ing in &ingredients {
         menu.push_str(&("- [ ] ".to_owned() + ing + "\n"));
     }

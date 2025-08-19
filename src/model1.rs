@@ -183,14 +183,18 @@ impl Kalman2D {
             + k * r_scale_var * k.transpose();
     }
 
-    #[inline]
+        // Accessors
+    pub fn weight_kg(&self) -> f64 {
+        self.x[0]
+    }
+
     pub fn w_kg(&self) -> f64 {
         self.x[0]
     }
-    #[inline]
     pub fn tdee(&self) -> f64 {
         self.x[1]
     }
+
 }
 
 fn compute_kalman_deltas(weights: &Vec<f64>) -> (f64, f64, f64) {
@@ -239,7 +243,7 @@ pub fn run<P: AsRef<std::path::Path>>(csv_path: P) -> Result<()> {
 
     let file = File::open(csv_path)?;
     let mut rdr = Reader::from_reader(file);
-    let mut kf = Kalman3D::new(127.0);
+    let mut kf = Kalman2D::new(127.0);
 
     let mut kalman_weights: Vec<f64> = Vec::new();
     let mut cals: Vec<f64> = Vec::new();
@@ -248,11 +252,9 @@ pub fn run<P: AsRef<std::path::Path>>(csv_path: P) -> Result<()> {
         let row: Row = result?;
         kf.step(&row);
         println!(
-            "final est: {:.2} lb  TDEE {:.0} kcal  k/RE {:.1}",
+            "final est: {:.2} lb  TDEE {:.0} kcal",
             kf.weight_kg() * LB_PER_KG,
-            kf.tdee(),
-            kf.kcal_per_re()
-        );
+            kf.tdee(),        );
         cals.push(row.intake_kcal);
         kalman_weights.push(kf.weight_kg() * LB_PER_KG);
     }
