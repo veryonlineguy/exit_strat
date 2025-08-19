@@ -180,6 +180,8 @@ pub fn morning_str() -> Vec<String> {
     result.push("Wash Retainer");
     result.push("Weigh");
     result.push("Write weight in field notes");
+    result.push("Dishes");
+    result.push("Do c exercise 3 min");
     result.push("Cook");
     result.push("5 min reading");
     result.push("Daily intention Post It");
