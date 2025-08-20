@@ -183,6 +183,7 @@ pub fn morning_str() -> Vec<String> {
     result.push("Dishes");
     result.push("Do c exercise 5 min");
     result.push("Do DIshes");
+    result.push("Lactase");
     result.push("Cook");
     result.push("5 min reading");
     result.push("Daily intention Post It");

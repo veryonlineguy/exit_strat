@@ -5,6 +5,9 @@
 Vo2 estimate assumes weight > 75kg
 
 # Changelog
+## Aug 20
+- Adjusted menu
+
 ## Aug 19
 - Added morning Dishes
 - Switched to one state Kalman Filter
