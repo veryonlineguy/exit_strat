@@ -116,20 +116,24 @@ pub fn spend_summary() -> Result<()> {
     let conn = Connection::open(&db_path)?;
 
     let mut stmt = conn.prepare(
-        "select date(date_time), sum(amount) from spend group by date(date_time) order by date(date_time) asc limit 7;",
+        "select date(date_time), sum(amount) from spend group by date(date_time) order by date(date_time) desc limit 7;",
     )?;
 
     let spend_iter = stmt.query_map([], |row| {
         Ok((row.get::<_, String>(0)?, row.get::<_, f64>(1)?))
     })?;
 
+    let mut dat = vec![];
     for spend in spend_iter {
         let (date, amount) = spend?;
         let amount = format!("{:.2}", amount);
         let amount = "$".to_owned() + &amount;
-        println!("{date}: {amount: >7}  ");
+        dat.push(format!("{date}: {amount: >7}  "));
     }
 
+    for spend in dat.into_iter().rev() {
+        println!("{spend}");
+    }
     Ok(())
 }
 

@@ -2,7 +2,7 @@ use rusqlite::Result;
 use std::fs;
 
 pub const DATA_DIR: &str = "data";
-pub const VAULT_DIR: &str = "data/vault/Daily";
+pub const VAULT_DIR: &str = "/home/emma/Documents/life/Daily";
 
 pub fn get_database_path() -> Result<String> {
     if !std::path::Path::new(DATA_DIR).exists() {
