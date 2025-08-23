@@ -41,7 +41,7 @@ fn read_suggestions() -> String {
 
 pub fn get_affirmations() -> String {
     let data: &str =
-        "- I don't think being trans is bad\n- I'm frugal\n- Consider what the other perseon needs";
+        "- I don't think being trans is bad\n- I'm frugal\n- Consider what the other person needs";
 
     let affirmations: String = read_affirmations();
 

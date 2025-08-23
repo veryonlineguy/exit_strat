@@ -30,10 +30,11 @@ struct Week<'a> {
 fn format_workout<'a>(workout: Workout<'a>) -> String {
     let mut result = String::new();
     {
-        result.push_str("# Heben\n");
+
 
         if workout.warmup.is_some() {
-            result.push_str("## LIFT\n");
+                    result.push_str("# Heben\n");
+                                result.push_str("## LIFT\n");
             let workout_str = "- [ ] ".to_owned() + &workout.warmup.clone().unwrap() + "\n";
             result.push_str(&workout_str);
         }

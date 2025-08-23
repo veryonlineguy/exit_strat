@@ -69,7 +69,8 @@ pub fn write_tomorrow_to_vault() {
     full_content.push_str(&lift);
 
     full_content.push_str("\n# Daily reflection\n");
-    full_content.push_str("\n## One word to describe the day\n\n");
+    full_content.push_str("\nword to describe the day: \n");
+        full_content.push_str("Mood 1-5: \n");
     full_content.push_str("\n## Wins\n- \n\n");
     full_content.push_str("# Affirmations\n\n");
 
@@ -177,6 +178,8 @@ pub fn morning_str() -> Vec<String> {
     let tomorrow = tomorrow + Days::new(1);
     let day = tomorrow.weekday();
     result.push("Wash Retainer");
+    result.push("Wash face");
+    result.push("Moisturize face");
     result.push("Weigh");
     result.push("Write weight in field notes");
     result.push("5 min reading");

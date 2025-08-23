@@ -6,6 +6,7 @@ Vo2 estimate assumes weight > 75kg
 
 # Changelog
 ## Aug 23
+- More mood tracking
 - Adjusted menu
 - Added morning + evening Sat and Sun
 
