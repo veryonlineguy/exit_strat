@@ -70,7 +70,6 @@ pub fn write_tomorrow_to_vault() {
 
     full_content.push_str("\n# Daily reflection\n");
     full_content.push_str("\n## One word to describe the day\n\n");
-    full_content.push_str("\n## Stats\nWeight: \nDebt: \n\n");
     full_content.push_str("\n## Wins\n- \n\n");
     full_content.push_str("# Affirmations\n\n");
 
@@ -184,7 +183,7 @@ pub fn morning_str() -> Vec<String> {
     result.push("Dishes");
     result.push("Do c exercise 5 min");
     result.push("Do DIshes");
-    result.push("Lactase");
+    result.push("Lactase + Probiotics");
     result.push("Cook");
 
     result.push("Daily intention Post It");

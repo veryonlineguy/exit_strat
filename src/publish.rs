@@ -31,7 +31,7 @@ pub fn publish() {
         let year: i32 = name[0..4].parse().unwrap();
         let week: u32 = name[6..8].parse().unwrap();
 
-        let sunday = NaiveDate::from_yo_opt(year, 7 * week - 9).unwrap();
+        let sunday = NaiveDate::from_yo_opt(year, 7 * week - 4).unwrap();
         let date = sunday.format("%Y-%m-%d").to_string();
         let header = "+++\ntitle = \"".to_owned()
             + name
